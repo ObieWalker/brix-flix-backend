@@ -3,7 +3,10 @@ package main
 import (
     "fmt"
     "log"
-	"net/http"
+    "net/http"
+
+    // importing any module from the root should
+    // be easier to do e.g: models "brix_flix_server/models"
 )
 
 func homePage(w http.ResponseWriter, r *http.Request){
