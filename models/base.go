@@ -3,36 +3,26 @@ package models
 import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/jinzhu/gorm"
-	"os"
-	"github.com/joho/godotenv"
 	"fmt"
+	"brix-flix-backend/utils"
 )
 
 var db *gorm.DB //database
+var err error
 
-func init() {
+func Init() {
 
-	e := godotenv.Load() //Load .env file
-	if e != nil {
-		fmt.Print(e)
-	}
-
-	username := os.Getenv("DB_USERNAME")
-	password := os.Getenv("DB_PASSWORD")
-	dbName := os.Getenv("DB_NAME")
-	dbHost := os.Getenv("DB_HOST")
-
-
-	dbUri := fmt.Sprintf("host=%s user=%s dbname=%s sslmode=disable password=%s", dbHost, username, dbName, password) //Build connection string
+	dbUri := utils.DbString()
 	fmt.Println(dbUri)
 
 	conn, err := gorm.Open("postgres", dbUri)
 	if err != nil {
-		fmt.Print(err)
+		fmt.Print(err.Error())
+		panic("Failed to connect to database")
 	}
+	defer conn.Close()
 
-	db = conn
-	db.Debug().AutoMigrate(&Account{}, &Contact{}) //Database migration
+	conn.Debug().AutoMigrate(&Movies{}) //Database migration
 }
 
 //returns a handle to the DB object
