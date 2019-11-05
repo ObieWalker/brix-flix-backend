@@ -14,7 +14,8 @@ type Movie struct {
 }
 
 func (movie *Movie) Create() (map[string] interface{}) {
-	GetDB().Create(movie)
+	
+  DB.Create(movie)
 
 	if movie.ID <= 0 {
 		return utils.Message(false, "Failed to create movie, connection error.")

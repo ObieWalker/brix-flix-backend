@@ -10,22 +10,25 @@ import (
 var db *gorm.DB //database
 var err error
 
-func Init() {
+func Init() *gorm.DB {
 
 	dbUri := utils.DbString()
-	fmt.Println(dbUri)
 
 	conn, err := gorm.Open("postgres", dbUri)
 	if err != nil {
-		fmt.Print(err.Error())
+		fmt.Print(err)
 		panic("Failed to connect to database")
 	}
-	defer conn.Close()
 
+	db = conn
 	conn.Debug().AutoMigrate(&Movie{}) //Database migration
+
+	return conn
 }
 
 //returns a handle to the DB object
 func GetDB() *gorm.DB {
 	return db
 }
+
+var DB = Init()
