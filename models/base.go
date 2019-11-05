@@ -22,7 +22,7 @@ func Init() {
 	}
 	defer conn.Close()
 
-	conn.Debug().AutoMigrate(&Movies{}) //Database migration
+	conn.Debug().AutoMigrate(&Movie{}) //Database migration
 }
 
 //returns a handle to the DB object
