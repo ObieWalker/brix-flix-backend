@@ -13,7 +13,7 @@ import (
 )
 
 func CreateMovie(w http.ResponseWriter, r *http.Request) {
-
+	
 	movie := &models.Movie{}
 	err := json.NewDecoder(r.Body).Decode(movie)
 	if err != nil {
@@ -22,7 +22,6 @@ func CreateMovie(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println(movie)
 	resp := movie.Create()
 	utils.Respond(w, resp)
 }
