@@ -15,6 +15,7 @@ bin
 .dockerfile-*
 
 go.sum
+Gopkg.toml
 
 .env
 /vendor
