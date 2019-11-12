@@ -4,6 +4,7 @@ import (
 	"brix-flix-backend/utils"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"fmt"
 )
 
 type Movie struct {
@@ -15,7 +16,7 @@ type Movie struct {
 
 func (movie *Movie) Create() (map[string] interface{}) {
 	
-  DB.Create(movie)
+  GetDB().Create(movie)
 
 	if movie.ID <= 0 {
 		return utils.Message(false, "Failed to create movie, connection error.")
@@ -24,4 +25,17 @@ func (movie *Movie) Create() (map[string] interface{}) {
 	response := utils.Message(true, "Movie has been added.")
 	response["movie"] = movie
 	return response
+}
+
+func Get() ([] *Movie) {
+	
+	movies := make([]*Movie, 0)
+	err := GetDB().Table("movies").Find(&movies).Error
+
+	if err != nil {
+		fmt.Println(err)
+		return nil
+	}
+
+	return movies
 }

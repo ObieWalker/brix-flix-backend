@@ -12,6 +12,7 @@ import (
 func newRouter() *mux.Router {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/movie/new", controllers.CreateMovie).Methods("POST")
+	router.HandleFunc("/api/movie", controllers.GetMovies).Methods("GET")
 	return router
 }
 
@@ -20,7 +21,6 @@ func main() {
 	models.Init()
 
 	router := newRouter()
-
 
 	port := os.Getenv("PORT")
 	if port == "" {

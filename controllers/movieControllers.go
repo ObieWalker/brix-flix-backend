@@ -25,3 +25,11 @@ func CreateMovie(w http.ResponseWriter, r *http.Request) {
 	resp := movie.Create()
 	utils.Respond(w, resp)
 }
+
+func GetMovies(w http.ResponseWriter, r *http.Request) {
+
+	data := models.Get()
+	resp := utils.Message(true, "success")
+	resp["data"] = data
+	utils.Respond(w, resp)
+}
