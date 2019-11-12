@@ -8,9 +8,8 @@ import (
 )
 
 var db *gorm.DB //database
-var err error
 
-func Init() *gorm.DB {
+func Init() {
 
 	dbUri := utils.DbString()
 
@@ -21,14 +20,10 @@ func Init() *gorm.DB {
 	}
 
 	db = conn
-	conn.Debug().AutoMigrate(&Movie{}) //Database migration
-
-	return conn
+	db.Debug().AutoMigrate(&Movie{}) //Database migration
 }
 
 //returns a handle to the DB object
 func GetDB() *gorm.DB {
 	return db
 }
-
-var DB = Init()
